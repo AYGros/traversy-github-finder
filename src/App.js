@@ -12,8 +12,6 @@ import './App.css';
 
 const App = () => {
 
-const [users, setUsers]= useState([]);
-const [user, setUser]= useState({});
 const [repos, setRepos]= useState([]);
 const [loading, setLoading]= useState(false);
 const [alert, setAlert]= useState(null);
@@ -47,14 +45,14 @@ const [alert, setAlert]= useState(null);
 // }
 
 // get a single github user
-const getUser = async (username) => {
-  setLoading(true);
-  const res = await axios
-    .get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+// const getUser = async (username) => {
+//   setLoading(true);
+//   const res = await axios
+//     .get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
 
-    setUser(res.data);
-    setLoading(false);
-}
+//     setUser(res.data);
+//     setLoading(false);
+// }
 
 // get user's repos
 const getUserRepos = async username => {
@@ -68,13 +66,6 @@ const getUserRepos = async username => {
     
 }
 
-// clear users from state
-const clearUsers = () => {
-
-  setUsers([]);
-  setLoading(false);
-  
-}
 
 // set alert
 const showAlert = (msg, type) => {
@@ -95,19 +86,19 @@ const showAlert = (msg, type) => {
           <Switch>
             <Route exact path='/' render={props => (
               <Fragment>
-                <Search  clearUsers={clearUsers} showClear={users.length > 0 ? true : false }  showAlert={showAlert} />
-                <Users loading={loading} users={users}  />
+                <Search  
+                  
+                setAlert={showAlert} />
+                <Users   />
               </Fragment>
             )} />
             <Route exact path='/about' component={About} />
             <Route exact path='/user/:login' render={props => (
               <User 
               {...props} 
-              getUser={getUser} 
               getUserRepos={getUserRepos}
-              user={user} 
               repos={repos}
-              loading={loading}/>
+              />
             )}/>
           </Switch>
         </div>
